@@ -1,0 +1,27 @@
+.table tr td img {
+  width: 50px !important;
+  height: 50px !important;
+  object-fit: contain;
+}
+
+td i {
+  font-size: 1.3rem;
+}
+
+th {
+  padding: 8px;
+}
+
+tr i {
+  font-size: 1.4rem;
+}
+
+tr i:hover {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+td {
+  color: var(--primary-color);
+  padding: 0px 0px 0px 0px;
+}

@@ -1,0 +1,41 @@
+.AddProduct-main{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.AddProduct-inner{
+    height: auto;
+    width: 70%;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.AddProduct-inner i{
+    font-size: 1.5rem;
+    margin-right: 0px;
+}
+
+.AddProduct-inner i:hover{
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.submitButton{
+    border: none;
+    outline: none;
+    padding: 3px 20px;
+    border-radius: 5px;
+    background: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    
+}
