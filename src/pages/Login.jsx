@@ -16,19 +16,15 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userInfo, setUserInfo] = useState([]);
-  let userinfo = [];
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    await axios
+     axios
       .get(url, { params: { email: email, userPass: password } })
       .then((response) => {
         const getData = response.data;
-        userinfo = getData
         setUserInfo(getData);
       });
-
-    
   };
 
   return (

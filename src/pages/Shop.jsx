@@ -19,12 +19,12 @@ const Shop = () => {
     axios.get("https://localhost:7282/api/GetProducts").then(function (item) {
       const productsData = item.data;
       setProducts(productsData);
-      setSearchedProducts(productsData)
+      setSearchedProducts(productsData);
     });
-  },[]);
+  }, []);
 
   //For Searching Products
-  
+
   useEffect(() => {
     const searchProducts = products.filter((item) =>
       item.productName.toLowerCase().includes(searchItem.toLowerCase())
