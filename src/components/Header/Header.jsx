@@ -6,7 +6,6 @@ import "./header.css";
 
 import { motion } from "framer-motion";
 
-import logo from "../../assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
 
 import { Container, Row } from "reactstrap";
@@ -66,7 +65,7 @@ const Header = () => {
         <Row>
           <div className="upper_part">
             <div className="logo">
-              <img src={logo} alt="logo" />
+            <i class="ri-store-2-line"></i>
               <div>
                 <h1>ShopEase</h1>
               </div>
@@ -75,7 +74,7 @@ const Header = () => {
             <SearchBar />
             {/* Icons from remix icon  https://remixicon.com/ */}
             <div className="nav_icons">
-              <motion.span
+            <motion.span
                 whileTap={{ scale: 1.2 }}
                 className="cart_icon"
                 onClick={navigateToCart}

@@ -27,9 +27,9 @@
   column-gap: 8px;
 }
 
-.logo img {
-  width: 1.5rem;
-  height: 1.5rem;
+.logo i {
+  font-size: 1.5rem;
+  color:#fff;
 }
 
 .logo h1 {
@@ -55,6 +55,8 @@
   margin-left: auto;
   margin-right: 35px;
   font-size: 1.3rem;
+  margin-bottom: 0px;
+  height: 0px;
 }
 
 .badge {
