@@ -13,13 +13,15 @@ import { useSelector } from "react-redux";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
+  const [searchedProducts, setSearchedProducts] = useState([]);
   const searchItem = useSelector((state) => state.cart.searchToken);
   useEffect(() => {
     axios.get("https://localhost:7282/api/GetProducts").then(function (item) {
       const productsData = item.data;
       setProducts(productsData);
+      setSearchedProducts(productsData)
     });
-  },[searchItem]);
+  },[]);
 
   //For Searching Products
   
@@ -27,7 +29,7 @@ const Shop = () => {
     const searchProducts = products.filter((item) =>
       item.productName.toLowerCase().includes(searchItem.toLowerCase())
     );
-    setProducts(searchProducts);
+    setSearchedProducts(searchProducts);
   }, [searchItem]);
 
   //products filter by category
@@ -112,7 +114,7 @@ const Shop = () => {
             {products.length === 0 ? (
               <h1 className="text-center fs-4">No products are found</h1>
             ) : (
-              <ProductList data={products} />
+              <ProductList data={searchedProducts} />
             )}
           </Row>
         </Container>
