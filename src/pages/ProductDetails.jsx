@@ -8,8 +8,6 @@ import "../styles/product-details.css";
 import { motion } from "framer-motion";
 
 import ProductList from "../components/UI/ProductsList";
-import { useDispatch } from "react-redux";
-import { cartActions } from "../redux/slices/cartSlice";
 
 import { toast } from "react-toastify";
 
@@ -19,85 +17,47 @@ const ProductDetails = () => {
   const [tab, setTab] = useState("desc");
   const { productID } = useParams();
   const url = "https://localhost:7282/api/GetProduct/" + productID;
-  const [products, setProducts] = useState([]);
+  const allProductsURL = "https://localhost:7282/api/GetProducts";
+  const [item, setItem] = useState([]);
   const [rating, setRating] = useState(null);
-  const dispatch = useDispatch();
+  const [products, setProducts] = useState([]);
 
-  const reviewUser = useRef("");
-  const reviewMsg = useRef("");
-  const getData = () => {
-    axios.get(`${url}`).then((response) => {
-      setProducts(response.item);
-    });
-  };
-
-  console.log(products);
   useEffect(() => {
-    getData();
+    axios.get(url).then(function (item) {
+      const getProduct = item.data;
+      setItem(getProduct);
+    });
+  }, [url]);
+
+  useEffect(() => {
+    axios.get(allProductsURL).then(function (item) {
+      const getProduct = item.data;
+      setProducts(getProduct);
+    });
   }, []);
 
-  const {
-    imgURL,
-    productName,
-    price,
-    avgRating,
-    reviews,
-    description,
-    shortDesc,
-    category,
-  } = products;
+  const relatedProducts = products.filter(
+    (data) => data.category === item.category
+  );
 
-  const relatedProducts = products.filter((item) => item.category === category);
+  const submitHandler = (e) => {};
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    const reviewUserName = reviewUser.current.value;
-    const reviewUserMsg = reviewMsg.current.value;
-
-    console.log(reviewUserName, reviewUserMsg, rating);
-
-    const reviewObj = {
-      userName: reviewUserName,
-      text: reviewUserMsg,
-      rating,
-    };
-
-    console.log(reviewObj);
-    toast.success("Review Submitted");
-  };
-
-  const addToCart = () => {
-    dispatch(
-      cartActions.addItem({
-        productID,
-        image: imgURL,
-        productName,
-        price,
-      })
-    );
-
-    toast.success("Product added successfully");
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [products]);
+  const addToCart = () => {};
 
   return (
-    <Helmet title={productName}>
-      <CommonSection title={productName} />
+    <Helmet title={item.productName}>
+      <CommonSection title={item.productName} />
 
       <section className="pt-0">
         <Container>
           <Row>
             <Col lg="6">
-              <img src={imgURL} alt="" />
+              <img src={item.imgURL} alt="" />
             </Col>
 
             <Col lg="6">
               <div className="product_details">
-                <h2>{productName}</h2>
+                <h2>{item.productName}</h2>
                 <div className="product_rating d-flex align-items-center gap-5 mb-3">
                   <div className="product_rating">
                     <span>
@@ -118,16 +78,16 @@ const ProductDetails = () => {
                   </div>
 
                   <p>
-                    (<span>{avgRating}</span> ratings)
+                    (<span>{item.avgRating}</span> ratings)
                   </p>
                 </div>
 
                 <div className="d-flex align-items-center gap-5">
-                  <span className="product_price">₱{price}</span>
-                  <span>Category: {category.toString()}</span>
+                  <span className="product_price">${item.price}</span>
+                  <span>Category: {item.category}</span>
                 </div>
 
-                <p className="mt-3">{shortDesc}</p>
+                <p className="mt-3">{item.shorDesc}</p>
 
                 <motion.button
                   whileTap={{ scale: 1.2 }}
@@ -156,39 +116,24 @@ const ProductDetails = () => {
                     className={`${tab === "rev" ? "active_tab" : ""}`}
                     onClick={() => setTab("rev")}
                   >
-                    Reviews ({reviews.length})
+                    Reviews (0{/*Number of Reviews */})
                   </h6>
                 </div>
 
                 {tab === "desc" ? (
                   <div className="tab_content mt-5">
-                    <p>{description}</p>
+                    <p>{item.longDesc}</p>
                   </div>
                 ) : (
                   <div className="product_review mt-5">
                     <div className="review_wrapper">
                       <ul>
-                        {reviews?.map((item, index) => (
-                          <li key={index} className="mb-4">
-                            <h6>John Doe</h6>
-                            <span>{item.rating} (rating)</span>
-                            <p>{item.text}</p>
-                          </li>
-                        ))}
+                        {/*Iteration for all Reviews dapat, kaso wala pa*/}
                       </ul>
 
                       <div className="review_form">
                         <form action="" onSubmit={submitHandler}>
                           <h4>Leave your experience</h4>
-                          <div className="form_group">
-                            <input
-                              type="text"
-                              placeholder="Enter name"
-                              ref={reviewUser}
-                              required
-                            />
-                          </div>
-
                           <div className="form_group d-flex align-items-center gap-3 rating_group">
                             <motion.span
                               whileTap={{ scale: 1.2 }}
@@ -224,10 +169,9 @@ const ProductDetails = () => {
 
                           <div className="form_group">
                             <textarea
-                              ref={reviewMsg}
                               row={4}
                               type="text"
-                              placeholder="Review Message..."
+                              placeholder="Write a review Message..."
                               required
                             />
                           </div>
