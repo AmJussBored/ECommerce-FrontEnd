@@ -14,15 +14,15 @@ import { useSelector } from "react-redux";
 
 const nav_links = [
   {
-    display: "User List",
+    display: "User Management",
     path: "/userlist",
   },
   {
-    display: "Product List",
+    display: "Product Management",
     path: "/productdashboard",
   },
   {
-    display: "Order List",
+    display: "Order Management",
     path: "/orderlist",
   },
 ];
